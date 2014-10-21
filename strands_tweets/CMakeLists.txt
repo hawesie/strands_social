@@ -56,7 +56,8 @@ catkin_python_setup()
 ## Generate actions in the 'action' folder
 add_action_files(
    DIRECTORY action
-   FILES SendTweet.action
+   FILES 
+   SendTweet.action
 )
 
 ## Generate added messages and services with any dependencies listed here

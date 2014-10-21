@@ -2,9 +2,14 @@
 
 from strands_tweets.srv import *
 import rospy
+
+from PIL import Image
 from twython import Twython, TwythonError
 import actionlib
 import strands_tweets.msg
+#from sensor_msgs.msg import Image
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
 
 class tweetsServer(object):
 
@@ -21,9 +26,10 @@ class tweetsServer(object):
 
         self.cancelled = False
         self._action_name = name
-        rospy.loginfo("Creating action server.")
+        rospy.loginfo("Creating action servers.")
         self._as = actionlib.SimpleActionServer(self._action_name, strands_tweets.msg.SendTweetAction, execute_cb = self.executeCallback, auto_start = False)
         self._as.register_preempt_callback(self.preemptCallback)
+
         rospy.loginfo(" ...starting")
         self._as.start()
         rospy.loginfo(" ...done")
@@ -31,9 +37,27 @@ class tweetsServer(object):
         rospy.loginfo("Ready to Tweet ...")
         rospy.spin()
 
+
     def _tweet_srv_cb(self, req):
         result = self._send_tweet(req.text)
         return TweetResponse(result)
+
+
+    def executeCallback(self, goal):
+        self._feedback.tweet = 'tweeting...'
+        self._as.publish_feedback(self._feedback)
+        #print goal
+        rospy.loginfo('%s: Tweeting %s' % (self._action_name, goal.text))
+        if goal.with_photo :            
+            result=self._send_photo_tweet(goal)
+        else:
+            result=self._send_tweet(goal.text)
+        if not self.cancelled :
+            self._result.success = result
+            self._feedback.tweet = goal.text
+            self._as.publish_feedback(self._feedback)
+            self._as.set_succeeded(self._result)
+
 
     def _send_tweet(self, text):
         self.cancelled = False
@@ -71,16 +95,28 @@ class tweetsServer(object):
                     ntweets= ntweets-1
                 return result
 
-    def executeCallback(self, goal):
-        self._feedback.tweet = 'tweeting...'
-        self._as.publish_feedback(self._feedback)
-        rospy.loginfo('%s: Tweeting %s' % (self._action_name, goal.text))
-        result=self._send_tweet(goal.text)
-        if not self.cancelled :
-            self._result.success = result
-            self._feedback.tweet = goal.text
-            self._as.publish_feedback(self._feedback)
-            self._as.set_succeeded(self._result)
+    def _send_photo_tweet(self, goal):
+        self.cancelled = False
+        nchar=len(goal.text)
+        rospy.loginfo("Tweeting %s ... (%d)", goal.text, nchar)
+        if nchar < 140:
+            try:
+                bridge = CvBridge()
+                photo = bridge.imgmsg_to_cv2(goal.photo, "bgr8")
+                ### I MUST CHANGE THIS AS SOON AS POSSIBLE ###
+                cv2.imwrite('/tmp/temp_tweet.png', photo)
+                photo2 = open('/tmp/temp_tweet.png', 'rb')
+                self._twitter.update_status_with_media(status=goal.text, media=photo2)
+                result=True
+            except TwythonError as e:
+                print e
+                result=False
+            return result
+        else:
+            result=False
+            rospy.loginfo("You can't send tweet and send an image with more than 140 characters, your tweet had %d characters", nchar)
+            return result
+
 
 
     def preemptCallback(self):
