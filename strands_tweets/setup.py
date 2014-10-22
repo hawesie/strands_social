@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
-    packages=['strands_tweets'],
-    package_dir={'': 'src'})
+    packages=['twython'],
+    package_dir={'twython':'contrib/twython'})
 
 setup(**setup_args)
