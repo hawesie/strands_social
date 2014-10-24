@@ -3,7 +3,7 @@
 import rospy
 
 import actionlib
-import qr_read_and_tweet.msg
+import image_branding.msg
 from sensor_msgs.msg import Image
 import cv2
 from cv_bridge import CvBridge
@@ -11,8 +11,8 @@ from cv_bridge import CvBridge
 
 class brandingServer(object):
 
-    _feedback = qr_read_and_tweet.msg.ImageBrandingFeedback()
-    _result   = qr_read_and_tweet.msg.ImageBrandingResult()
+    _feedback = image_branding.msg.ImageBrandingFeedback()
+    _result   = image_branding.msg.ImageBrandingResult()
 
     def __init__(self, name):
         self.cancelled = False
@@ -21,7 +21,7 @@ class brandingServer(object):
         
         rospy.loginfo("Creating action servers.")
         print self._action_name
-        self._as = actionlib.SimpleActionServer(self._action_name, qr_read_and_tweet.msg.ImageBrandingAction, execute_cb = self.executeCallback, auto_start = False)
+        self._as = actionlib.SimpleActionServer(self._action_name, image_branding.msg.ImageBrandingAction, execute_cb = self.executeCallback, auto_start = False)
         self._as.register_preempt_callback(self.preemptCallback)
 
 
