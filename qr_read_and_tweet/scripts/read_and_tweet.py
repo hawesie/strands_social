@@ -10,7 +10,7 @@ from threading import Timer
 
 from mongodb_store.message_store import MessageStoreProxy
 import strands_tweets.msg
-import qr_read_and_tweet.msg
+import image_branding.msg
 from fake_camera_effects.msg import CameraEffectsAction, CameraEffectsGoal
 from strands_webserver.msg import WebloaderTmpPageAction, WebloaderTmpPageGoal
 import cv2
@@ -32,7 +32,7 @@ class read_and_tweet(object):
         self.msg_sub = rospy.Subscriber('/datamatrix/msg', String, self.datamatrix_callback, queue_size=1)
         self.client = actionlib.SimpleActionClient('strands_tweets', strands_tweets.msg.SendTweetAction)
         self.click = actionlib.SimpleActionClient('camera_effects', CameraEffectsAction)
-        self.brandclient = actionlib.SimpleActionClient('/image_branding', qr_read_and_tweet.msg.ImageBrandingAction)
+        self.brandclient = actionlib.SimpleActionClient('/image_branding', image_branding.msg.ImageBrandingAction)
         self.tmppageClient = actionlib.SimpleActionClient('/webloader/tmppage', WebloaderTmpPageAction)
 
         self.tw_pub = rospy.Publisher('/nhm/twitter/message', String, latch=True)
@@ -93,7 +93,7 @@ class read_and_tweet(object):
     def image_callback(self, msg) :
         clickgoal = CameraEffectsGoal()
         tweetgoal = strands_tweets.msg.SendTweetGoal()
-        brandgoal = qr_read_and_tweet.msg.ImageBrandingGoal()
+        brandgoal = image_branding.msg.ImageBrandingGoal()
 
         self.img_subs.unregister()
 
