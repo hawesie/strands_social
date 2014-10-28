@@ -2,8 +2,8 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2014-10-28)
+------------------
 * moving License to Strands Tweets
 * moving submodule to strands tweets
 * Update README.md
