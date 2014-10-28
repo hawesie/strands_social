@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>fake_camera_effects</name>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <description>The fake_camera_effects package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
