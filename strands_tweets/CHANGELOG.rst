@@ -2,6 +2,11 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* removed space
+* Contributors: Jaime Pulido Fentanes
+
 0.0.1 (2014-10-28)
 ------------------
 * moving License to Strands Tweets
