@@ -2,6 +2,12 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* adding missing dependency
+* adding install targets
+* Contributors: Jaime Pulido Fentanes
+
 0.0.2 (2014-10-28)
 ------------------
 * removed space
