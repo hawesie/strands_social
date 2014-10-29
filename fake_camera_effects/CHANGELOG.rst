@@ -2,8 +2,8 @@
 Changelog for package fake_camera_effects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2014-10-29)
+------------------
 * Added install targets, proper dependencies and a launch file.
   Addressing `#18 <https://github.com/strands-project/strands_social/issues/18>`_
 * Contributors: Christian Dondrup

@@ -2,8 +2,8 @@
 Changelog for package datamatrix_read
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2014-10-29)
+------------------
 * adding install targets
 * Contributors: Jaime Pulido Fentanes
 

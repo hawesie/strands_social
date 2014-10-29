@@ -2,8 +2,8 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2014-10-29)
+------------------
 * adding missing dependency
 * adding install targets
 * Contributors: Jaime Pulido Fentanes
