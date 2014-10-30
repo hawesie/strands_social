@@ -2,6 +2,15 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#23 <https://github.com/strands-project/strands_social/issues/23>`_ from Jailander/hydro-devel
+  Removed submodule twython
+* fixing setup.py
+* adding strands-twython as a dependency
+* Removed submodule twython
+* Contributors: Jaime Pulido Fentanes
+
 0.0.3 (2014-10-29)
 ------------------
 * adding missing dependency
