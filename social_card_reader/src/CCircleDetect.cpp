@@ -40,7 +40,7 @@ CCircleDetect::CCircleDetect(int wi,int he)
 		SSegment dummy;
 		bufferCleanup(dummy);
 	}
-	diameterRatio = 5.0/14.0; //inner vs. outer circle diameter 
+	diameterRatio = 1.0/2.5; //inner vs. outer circle diameter 
 	float areaRatioInner_Outer = diameterRatio*diameterRatio;
 	outerAreaRatio = M_PI*(1.0-areaRatioInner_Outer)/4;
 	innerAreaRatio = M_PI/4.0;
@@ -85,7 +85,7 @@ bool CCircleDetect::changeThreshold()
 
 bool CCircleDetect::examineSegment(CRawImage *image,SSegment *segmen,int ii,float areaRatio)
 {
-	int step = image->bpp; 
+	int step = 1;//image->bpp; 
 	int vx,vy;
 	queueOldStart = queueStart;
 	int position = 0;
@@ -111,7 +111,7 @@ bool CCircleDetect::examineSegment(CRawImage *image,SSegment *segmen,int ii,floa
 		pos = position+1;
 		if (buffer[pos] == 0){
 			 ptr = &image->data[pos*step];
-			 buffer[pos]=(ptr[0] > threshold)-2;
+			 buffer[pos]=(ptr[0] < threshold)-2;
 		}
 		if (buffer[pos] == type){
 			queue[queueEnd++] = pos;
@@ -121,7 +121,7 @@ bool CCircleDetect::examineSegment(CRawImage *image,SSegment *segmen,int ii,floa
 		pos = position-1;
 		if (buffer[pos] == 0){
 			 ptr = &image->data[pos*step];
-			 buffer[pos]=(ptr[0] > threshold)-2;
+			 buffer[pos]=(ptr[0] < threshold)-2;
 		}
 		if (buffer[pos] == type){
 			queue[queueEnd++] = pos;
@@ -131,7 +131,7 @@ bool CCircleDetect::examineSegment(CRawImage *image,SSegment *segmen,int ii,floa
 		pos = position-width;
 		if (buffer[pos] == 0){
 			 ptr = &image->data[pos*step];
-			 buffer[pos]=(ptr[0] > threshold)-2;
+			 buffer[pos]=(ptr[0] < threshold)-2;
 		}
 		if (buffer[pos] == type){
 			queue[queueEnd++] = pos;
@@ -141,7 +141,7 @@ bool CCircleDetect::examineSegment(CRawImage *image,SSegment *segmen,int ii,floa
 		pos = position+width;
 		if (buffer[pos] == 0){
 			 ptr = &image->data[pos*step];
-			 buffer[pos]=(ptr[0] > threshold)-2;
+			 buffer[pos]=(ptr[0] < threshold)-2;
 		}
 		if (buffer[pos] == type){
 			queue[queueEnd++] = pos;
@@ -235,7 +235,7 @@ SSegment CCircleDetect::findSegment(CRawImage* image, SSegment init)
 		if (buffer[ii] == 0){
 			ptr = &image->data[ii*step];
 			//buffer[ii]=((ptr[0]+ptr[1]+ptr[2]) > threshold)-2;
-			if (ptr[0] < threshold) buffer[ii] = -2;
+			if (ptr[0] > threshold) buffer[ii] = -2;
 		}
 		if (buffer[ii] == -2 && numSegments<MAX_SEGMENTS){
 			//new segment found
@@ -246,7 +246,7 @@ SSegment CCircleDetect::findSegment(CRawImage* image, SSegment init)
 				pos = segmentArray[numSegments-1].y*image->width+segmentArray[numSegments-1].x;
 				if (buffer[pos] == 0){
 					ptr = &image->data[pos*step];
-					buffer[pos]=(ptr[0] > threshold)-2;
+					buffer[pos]=(ptr[0] < threshold)-2;
 				}
 				if (buffer[pos] == -1 && numSegments<MAX_SEGMENTS){
 					if (examineSegment(image,&segmentArray[numSegments],pos,innerAreaRatio)){
@@ -265,7 +265,6 @@ SSegment CCircleDetect::findSegment(CRawImage* image, SSegment init)
 							six=siy=cm0=cm1=cm2=0;
 						//	segmentArray[numSegments-1].x = segmentArray[numSegments-2].x;
 						//	segmentArray[numSegments-1].y = segmentArray[numSegments-2].y;
-
 							for (int p = queueOldStart;p<queueEnd;p++){
 								pos = queue[p];
 								tx = pos%image->width;
@@ -302,6 +301,7 @@ SSegment CCircleDetect::findSegment(CRawImage* image, SSegment init)
 								cm1+=tx*ty;
 								cm2+=ty*ty; 
 							}
+
 							float sx = (float)six/queueEnd;
 							float sy = (float)siy/queueEnd;
 							cm0f = (cm0 - sx*sx*queueEnd);
