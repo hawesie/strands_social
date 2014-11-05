@@ -2,8 +2,8 @@
 Changelog for package social_card_reader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2014-11-05)
+------------------
 * Install targets added and redundant dependencies removed.
 * CDump removed to resolve dependency on NCURSES.
 * Brief README + card improvement
