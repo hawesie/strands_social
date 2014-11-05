@@ -94,12 +94,6 @@ include_directories(include
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-## Mark executables and/or libraries for installation
-# install(TARGETS charging charging_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
@@ -128,9 +122,6 @@ include_directories(include
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-#add_library(CDump src/CDump.cpp)
-
-#target_link_libraries(ramp_climb ${catkin_LIBRARIES})
 add_library(social_cdet src/CCircleDetect.cpp)
 add_library(social_cim src/CRawImage.cpp)
 add_library(social_tim src/CTimer.cpp)
@@ -139,6 +130,27 @@ add_library(social_transform src/CTransformation.cpp)
 add_executable(social_card_reader src/socialCardReader.cpp)
 target_link_libraries (social_card_reader social_tim social_cim social_cdet social_transform social_math)
 
-add_dependencies(social_card_reader scitos_msgs_gencpp scitos_apps_msgs_genccp actionlib scitos_apps_msgs actionlib_msgs scitos_apps_msgs_generate_messages_cpp)
-
+add_dependencies(social_card_reader ${catkin_EXPORTED_TARGETS})
 target_link_libraries (social_card_reader  ${catkin_LIBRARIES})
+
+install(TARGETS
+		social_cdet
+		social_cim
+		social_tim
+		social_math
+		social_transform
+		social_card_reader
+		ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+		LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+		RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+		DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+		FILES_MATCHING PATTERN "*.h"
+		PATTERN ".svn" EXCLUDE
+)
+
+install(DIRECTORY doc
+		DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
