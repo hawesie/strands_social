@@ -5,7 +5,7 @@ project(social_card_reader)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS  image_transport roscpp std_msgs) 
-set ( CMAKE_CXX_FLAGS "-ggdb")
+set ( CMAKE_CXX_FLAGS "-Ofast -march=native -mno-avx -ggdb")
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -135,8 +135,10 @@ add_library(social_dump src/CDump.cpp)
 add_library(social_cdet src/CCircleDetect.cpp)
 add_library(social_cim src/CRawImage.cpp)
 add_library(social_tim src/CTimer.cpp)
+add_library(social_math src/sysmat.cpp)
+add_library(social_transform src/CTransformation.cpp)
 add_executable(social_card_reader src/socialCardReader.cpp)
-target_link_libraries (social_card_reader social_tim social_cim social_cdet social_dump)
+target_link_libraries (social_card_reader social_tim social_cim social_cdet social_transform social_math social_dump)
 
 add_dependencies(social_card_reader scitos_msgs_gencpp scitos_apps_msgs_genccp actionlib scitos_apps_msgs actionlib_msgs scitos_apps_msgs_generate_messages_cpp)
 

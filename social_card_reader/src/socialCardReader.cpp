@@ -2,18 +2,22 @@
 #include "CDump.h"
 #include "CTimer.h"
 #include "CCircleDetect.h"
+#include "CTransformation.h"
 #include <image_transport/image_transport.h>
 #include <std_msgs/String.h>
 
 TLogModule module = LOG_MODULE_MAIN;
 image_transport::Publisher imdebug;
+ros::Publisher command_pub;
+
 CCircleDetect *detector;
+CTransformation *photoTf;
+CTransformation *commandTf;
+
 SSegment currentSegment;
 SSegment lastSegment;
 CRawImage *grayImage;
 CRawImage *depthImage;
-
-ros::Publisher command_pub;
 
 int  defaultImageWidth= 640;
 int  defaultImageHeight = 480;
