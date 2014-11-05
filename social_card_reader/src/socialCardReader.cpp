@@ -1,12 +1,10 @@
 #include <ros/ros.h>
-#include "CDump.h"
 #include "CTimer.h"
 #include "CCircleDetect.h"
 #include "CTransformation.h"
 #include <image_transport/image_transport.h>
 #include <std_msgs/String.h>
 
-TLogModule module = LOG_MODULE_MAIN;
 image_transport::Publisher imdebug;
 ros::Publisher command_pub;
 
@@ -113,7 +111,6 @@ int main(int argc, char** argv)
 	ros::init(argc, argv, "social_card_reader");
 	ros::NodeHandle n;
 	image_transport::ImageTransport it(n);
-	dump = new CDump(NULL,256,1000000);
 	grayImage = new CRawImage(defaultImageWidth,defaultImageHeight,4);
 	depthImage = new CRawImage(defaultImageWidth,defaultImageHeight,4);
 	detector = new CCircleDetect(defaultImageWidth,defaultImageHeight);

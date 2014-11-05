@@ -131,14 +131,13 @@ include_directories(include
 #add_library(CDump src/CDump.cpp)
 
 #target_link_libraries(ramp_climb ${catkin_LIBRARIES})
-add_library(social_dump src/CDump.cpp)
 add_library(social_cdet src/CCircleDetect.cpp)
 add_library(social_cim src/CRawImage.cpp)
 add_library(social_tim src/CTimer.cpp)
 add_library(social_math src/sysmat.cpp)
 add_library(social_transform src/CTransformation.cpp)
 add_executable(social_card_reader src/socialCardReader.cpp)
-target_link_libraries (social_card_reader social_tim social_cim social_cdet social_transform social_math social_dump)
+target_link_libraries (social_card_reader social_tim social_cim social_cdet social_transform social_math)
 
 add_dependencies(social_card_reader scitos_msgs_gencpp scitos_apps_msgs_genccp actionlib scitos_apps_msgs actionlib_msgs scitos_apps_msgs_generate_messages_cpp)
 
