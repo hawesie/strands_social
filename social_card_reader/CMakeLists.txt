@@ -4,7 +4,7 @@ project(social_card_reader)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS  image_transport roscpp ) 
+find_package(catkin REQUIRED COMPONENTS  image_transport roscpp std_msgs) 
 set ( CMAKE_CXX_FLAGS "-ggdb")
 
 ## System dependencies are found with CMake's conventions
