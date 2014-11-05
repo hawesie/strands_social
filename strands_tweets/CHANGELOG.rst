@@ -2,6 +2,9 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.4 (2014-10-30)
 ------------------
 * Merge pull request `#23 <https://github.com/strands-project/strands_social/issues/23>`_ from Jailander/hydro-devel
