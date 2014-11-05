@@ -353,7 +353,7 @@ SSegment CCircleDetect::findSegment(CRawImage* image, SSegment init)
 								//if (m1i - t0 > 0 && m1i - t1 >0) printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"); 
 								//float t0 = (m0i-diameterRatio*m0o)/(1+diameterRatio);
 								//float t1 = (m1i-diameterRatio*m1o)/(1+diameterRatio);
-								m0i-=t;m1i-=t;m0o+=t;m1o+=t;
+								//m0i-=t;m1i-=t;m0o+=t;m1o+=t;
 								//fprintf(stdout,"UUU: %f R: %f %f R: %f %f\n",t,m1i/m1o*0.14,m0i/m0o*0.14,(m0o*m1o-m0i*m1i)/(m0i*m1i),(0.14*0.14-0.05*0.05)/(0.05*0.05));
 								segmentArray[numSegments-1].m0 = m0o;
 								segmentArray[numSegments-1].m1 = m1o;

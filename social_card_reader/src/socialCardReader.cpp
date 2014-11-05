@@ -28,6 +28,7 @@ int numCommands = 5;
 int lastCommand = -1;
 int command = -1;
 float angle = 0;
+float  distanceTolerance = 0.1;
 
 const char *commandName[] = {
 	"PHOTO",
@@ -50,8 +51,10 @@ void grayImageCallback(const sensor_msgs::ImageConstPtr& msg)
 
 	lastSegment = currentSegment;
 	currentSegment = detector->findSegment(grayImage,lastSegment);
+	 
 	if (currentSegment.valid)
 	{
+		STrackedObject o;
 		if (currentSegment.bwRatio < 4.0)
 		{	
 			//command card
@@ -59,17 +62,25 @@ void grayImageCallback(const sensor_msgs::ImageConstPtr& msg)
 			command = floor(angle);
 			angle = fabs(angle-command-0.5);
 			if (angle > 0.2) command = numCommands; else command++;
+			o = commandTf->transform(currentSegment);
 		}
 		else
 		{
 			//photo card
 			command = 0;
+			o = photoTf->transform(currentSegment);
 		}
-	
+			
 		int ptr = depthImage->bpp*(((int)currentSegment.y)*depthImage->width+(int)currentSegment.x);
-		//printf("Circle detected at %.2f %.2f %i - action %s %f %i!\n",currentSegment.x,currentSegment.y,depthImage->data[ptr]+depthImage->data[ptr+1]*255,commandName[command],angle,circleDetections);
-		if (command == lastCommand) circleDetections++; else circleDetections = 0;
-		lastCommand = command;
+		float distance = 0.001*(depthImage->data[ptr]+depthImage->data[ptr+1]*255);
+		//printf("Circle detected at %.2f %.2f %.3f %.3f error %.3f - action %s %f %i!\n",currentSegment.x,currentSegment.y,o.x,distance,fabs(1-distance/o.x),commandName[command],angle,circleDetections);
+		if (fabs(1-distance/o.x)<distanceTolerance){
+			if (command == lastCommand) circleDetections++; else circleDetections = 0;
+			lastCommand = command;
+		}else{
+			circleDetections=0;
+			command = lastCommand = -1;
+		}
 	} else {
 		//printf("No circle visible\n");
 		circleDetections=0;
@@ -106,6 +117,8 @@ int main(int argc, char** argv)
 	grayImage = new CRawImage(defaultImageWidth,defaultImageHeight,4);
 	depthImage = new CRawImage(defaultImageWidth,defaultImageHeight,4);
 	detector = new CCircleDetect(defaultImageWidth,defaultImageHeight);
+	photoTf = new CTransformation(0.05);
+	commandTf = new CTransformation(0.07);
 	image_transport::Subscriber subimGray = it.subscribe("/head_xtion/rgb/image_mono", 1, grayImageCallback);
 	image_transport::Subscriber subimDepth = it.subscribe("/head_xtion/depth/image_raw", 1, depthImageCallback);
 	command_pub = n.advertise<std_msgs::String>("/socialCardReader/commands", 1);
