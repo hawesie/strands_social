@@ -2,8 +2,8 @@
 Changelog for package strands_social
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.6 (2014-11-06)
+------------------
 * Added social_card_reader
 * Created metapackage for easier install
 * Contributors: Christian Dondrup
