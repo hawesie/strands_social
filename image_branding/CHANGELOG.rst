@@ -2,8 +2,8 @@
 Changelog for package image_branding
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.7 (2014-11-20)
+------------------
 * making brand image a parameter and fixing package.xml in strands_tweets
 * Contributors: Jaime Pulido Fentanes
 
