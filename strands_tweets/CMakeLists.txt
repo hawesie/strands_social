@@ -15,6 +15,11 @@ catkin_python_setup()
 ################################################
 
 
+add_message_files(
+  FILES
+  Tweet.msg
+)
+
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
