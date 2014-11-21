@@ -24,7 +24,7 @@ class logTweets(object):
         rospy.spin()
 
     def tweet_callback(self, msg) :
-        self.msg_store = MessageStoreProxy(collection='twityer_log')
+        self.msg_store = MessageStoreProxy(collection='twitter_log')
         
         to_save = strands_tweets.msg.Tweeted()
         try:
