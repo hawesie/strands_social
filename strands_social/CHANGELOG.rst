@@ -2,6 +2,9 @@
 Changelog for package strands_social
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.9 (2014-11-21)
 ------------------
 
