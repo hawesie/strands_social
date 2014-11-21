@@ -2,8 +2,8 @@
 Changelog for package card_image_tweet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.8 (2014-11-21)
+------------------
 * Adjusting version number
 * adding card_image_tweet
 * Contributors: Christian Dondrup, Jaime Pulido Fentanes
