@@ -2,8 +2,8 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.9 (2014-11-21)
+------------------
 * fixing typo
 * adding log tweets
 * bug fix
