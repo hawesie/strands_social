@@ -2,6 +2,9 @@
 Changelog for package social_card_reader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.7 (2014-11-20)
 ------------------
 

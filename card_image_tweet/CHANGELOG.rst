@@ -2,6 +2,11 @@
 Changelog for package card_image_tweet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* publish topic with text image and depth everytime a tweet is made
+* Contributors: Jaime Pulido Fentanes
+
 0.0.8 (2014-11-21)
 ------------------
 * Adjusting version number
