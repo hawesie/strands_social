@@ -24,7 +24,7 @@ class tweetsServer(object):
         OAUTH_TOKEN_SECRET = rospy.get_param("/twitter/oauthTokenSecret")
         self._twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
         self._tweet_srv = rospy.Service("/strands_tweets/Tweet",Tweet,self._tweet_srv_cb)
-        self.tw_pub = rospy.Publisher('/strands_tweets/tweet', strands_tweets.msg.Tweet)
+        self.tw_pub = rospy.Publisher('/strands_tweets/tweet', strands_tweets.msg.Tweeted)
 
         self.cancelled = False
         self._action_name = name
@@ -115,7 +115,7 @@ class tweetsServer(object):
                 except rospy.ROSException :
                     rospy.logwarn("Failed to get camera rgb Image")
                 
-                tweettext = strands_tweets.msg.Tweet()
+                tweettext = strands_tweets.msg.Tweeted()
                 tweettext.text = goal.text
                 tweettext.photo = goal.photo
                 tweettext.depth = depth
