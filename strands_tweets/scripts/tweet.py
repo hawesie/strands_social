@@ -110,15 +110,11 @@ class tweetsServer(object):
                 photo2 = open('/tmp/temp_tweet.png', 'rb')
                 self._twitter.update_status_with_media(status=goal.text, media=photo2)
                 
-                try:
-                    depth = rospy.wait_for_message('/head_xtion/depth/image_rect_meters', sensor_msgs.msg.Image, timeout=1.0)
-                except rospy.ROSException :
-                    rospy.logwarn("Failed to get camera rgb Image")
-                
+                                
                 tweettext = strands_tweets.msg.Tweeted()
                 tweettext.text = goal.text
                 tweettext.photo = goal.photo
-                tweettext.depth = depth
+                #tweettext.depth = depth
 
                 self.tw_pub.publish(tweettext)
 
