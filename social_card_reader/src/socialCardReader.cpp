@@ -73,13 +73,13 @@ void grayImageCallback(const sensor_msgs::ImageConstPtr& msg)
 			
 		int ptr = depthImage->bpp*(((int)currentSegment.y)*depthImage->width+(int)currentSegment.x);
 		float distance = 0.001*(depthImage->data[ptr]+depthImage->data[ptr+1]*255);
-		//printf("Circle detected at %.2f %.2f %.3f %.3f error %.3f - action %s %f %i!\n",currentSegment.x,currentSegment.y,o.x,distance,fabs(1-distance/o.x),commandName[command],angle,circleDetections);
 		geometry_msgs::PoseStamped pose;
 		pose.pose.position.x = -o.y;
 		pose.pose.position.y = -o.z;
 		pose.pose.position.z = o.x;
-		pose_pub.publish(pose);	
 		if (fabs(1-distance/o.x)<distanceTolerance){
+			printf("Circle detected at %.2f %.2f %.3f %.3f error %.3f - action %s %f %i!\n",-o.y,-o.z,o.x,distance,fabs(1-distance/o.x),commandName[command],angle,circleDetections);
+			pose_pub.publish(pose);	
 			if (command == lastCommand) circleDetections++; else circleDetections = 0;
 			lastCommand = command;
 		}else{
@@ -115,7 +115,7 @@ void depthImageCallback(const sensor_msgs::ImageConstPtr& msg)
 
 int main(int argc, char** argv)
 {
-	ros::init(argc, argv, "social_card_reader");
+	ros::init(argc, argv, "social_card_reader2");
 	ros::NodeHandle n;
 	image_transport::ImageTransport it(n);
 	grayImage = new CRawImage(defaultImageWidth,defaultImageHeight,4);
