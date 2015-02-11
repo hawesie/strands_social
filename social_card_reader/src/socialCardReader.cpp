@@ -28,7 +28,7 @@ int numCommands = 5;
 int lastCommand = -1;
 int command = -1;
 float angle = 0;
-float  distanceTolerance = 0.1;
+float  distanceTolerance = 0.2;
 
 const char *commandName[] = {
 	"INFO_TERMINAL",
@@ -77,8 +77,8 @@ void grayImageCallback(const sensor_msgs::ImageConstPtr& msg)
 		pose.pose.position.x = -o.y;
 		pose.pose.position.y = -o.z;
 		pose.pose.position.z = o.x;
+		printf("Circle detected at %.2f %.2f %.3f %.3f error %.3f - action %s %f %i!\n",-o.y,-o.z,o.x,distance,fabs(1-distance/o.x),commandName[command],angle,circleDetections);
 		if (fabs(1-distance/o.x)<distanceTolerance){
-			printf("Circle detected at %.2f %.2f %.3f %.3f error %.3f - action %s %f %i!\n",-o.y,-o.z,o.x,distance,fabs(1-distance/o.x),commandName[command],angle,circleDetections);
 			pose_pub.publish(pose);	
 			if (command == lastCommand) circleDetections++; else circleDetections = 0;
 			lastCommand = command;
