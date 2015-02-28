@@ -128,6 +128,8 @@ add_library(social_tim src/CTimer.cpp)
 add_library(social_math src/sysmat.cpp)
 add_library(social_transform src/CTransformation.cpp)
 add_executable(social_card_reader src/socialCardReader.cpp)
+
+target_link_libraries (social_transform social_math)
 target_link_libraries (social_card_reader social_tim social_cim social_cdet social_transform social_math)
 
 add_dependencies(social_card_reader ${catkin_EXPORTED_TARGETS})
