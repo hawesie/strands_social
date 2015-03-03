@@ -1,0 +1,22 @@
+<launch>
+	<!-- Remote Launching -->
+	<arg name="machine" default="localhost"/>
+	<arg name="user" default="" />
+
+	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true" />
+
+
+	<!-- Streams video on demand from ROS image topics -->
+	<node name="web_video_server" pkg="web_video_server" type="web_video_server" output="screen">
+		<param name="port" value="8080"/>
+	</node>
+
+	<!-- Grabs an image then tweets it with the text provided -->
+	<node name="image_tweeter_node" pkg="strands_tweets" type="image_tweeter_node.py" output="screen"/>
+
+
+	<!-- Node to provide the web page which pulls it together -->
+	<node name="tweet_me_screen" pkg="tweet_me_screen" type="tweet_me_screen.py" output="screen"/>
+
+</launch>
