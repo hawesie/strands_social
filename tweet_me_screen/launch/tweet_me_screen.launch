@@ -3,6 +3,9 @@
 	<arg name="machine" default="localhost"/>
 	<arg name="user" default="" />
 
+	<!-- Parameters -->
+  	<arg name="image_topic" default="/head_xtion/rgb/image_mono"/>
+
 	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true" />
 
@@ -12,11 +15,11 @@
 		<param name="port" value="8080"/>
 	</node>
 
-	<!-- Grabs an image then tweets it with the text provided -->
-	<node name="image_tweeter_node" pkg="strands_tweets" type="image_tweeter_node.py" output="screen"/>
-
+	<!-- Twitter services -->
+	<include file="$(find strands_tweets)/launch/strands_tweets.launch" />
 
 	<!-- Node to provide the web page which pulls it together -->
-	<node name="tweet_me_screen" pkg="tweet_me_screen" type="tweet_me_screen.py" output="screen"/>
-
+	<node name="tweet_me_screen" pkg="tweet_me_screen" type="tweet_me_screen.py" output="screen">
+		<param name="image_topic" value="$(arg image_topic)"/>
+	</node>
 </launch>
