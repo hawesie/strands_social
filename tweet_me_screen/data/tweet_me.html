@@ -61,10 +61,14 @@
 
     goal.on('result', function(result) {
       console.log('Final Result: ' + result);
-      $('#tweetButton').removeClass('disabled');
+      // renable image stream and tweet button
+      $('#imageStream').attr("src","http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono");
+      $('#tweetButton').removeClass('disabled');      
     });
 
     goal.send();
+    // switch to image snapshot and disable button
+    $('#imageStream').attr("src","http://localhost:8080/snapshot?topic=/head_xtion/rgb/image_mono");
     $('#tweetButton').addClass('disabled');
   }
   </script>
@@ -80,7 +84,7 @@
     <br/>
     <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-10"><img class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono"/></div> 
+      <div class="col-sm-10"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono"/></div> 
       <div class="col-sm-1"></div>      
     </div>
     <br/>
