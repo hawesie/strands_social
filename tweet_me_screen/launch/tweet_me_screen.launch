@@ -19,7 +19,7 @@
 	<include file="$(find strands_tweets)/launch/strands_tweets.launch" />
 
 	<!-- Node to provide the web page which pulls it together -->
-	<node name="tweet_me_screen" pkg="tweet_me_screen" type="tweet_me_screen.py" output="screen">
+	<node name="tweet_me_screen" pkg="tweet_me_screen" type="tweet_me_screen_example.py" output="screen">
 		<param name="image_topic" value="$(arg image_topic)"/>
 	</node>
 </launch>

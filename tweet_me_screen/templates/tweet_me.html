@@ -1,3 +1,4 @@
+$def with (topic, headline, sayings)
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +52,7 @@
       goalMessage : {
         text : 'Test tweet',
         force : false,
-        topic : '/head_xtion/rgb/image_mono'
+        topic : '$:topic'
       }
     });
 
@@ -62,14 +63,14 @@
     goal.on('result', function(result) {
       console.log('Final Result: ' + result);
       // renable image stream and tweet button
-      $('#imageStream').attr("src","http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono");
-      $('#tweetButton').removeClass('disabled');      
+      $$('#imageStream').attr("src","http://localhost:8080/stream?topic=$:topic");
+      $$('#tweetButton').removeClass('disabled');      
     });
 
     goal.send();
     // switch to image snapshot and disable button
-    $('#imageStream').attr("src","http://localhost:8080/snapshot?topic=/head_xtion/rgb/image_mono");
-    $('#tweetButton').addClass('disabled');
+    $$('#imageStream').attr("src","http://localhost:8080/snapshot?topic=$:topic");
+    $$('#tweetButton').addClass('disabled');
   }
   </script>
 
@@ -79,12 +80,12 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-sm-12"></div><h2 class="text-center"><span class="lead">Have your picture tweeted by</span> @BobStrands</h2></div>
+      <div class="col-sm-12"><h2 class="text-center">$:headline</h2></div>
     </div>
     <br/>
     <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-10"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono"/></div> 
+      <div class="col-sm-10"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=$:topic"/></div> 
       <div class="col-sm-1"></div>      
     </div>
     <br/>
