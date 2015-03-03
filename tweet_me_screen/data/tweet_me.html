@@ -11,6 +11,64 @@
   <script src="js/display.js"></script>
   <script type="text/javascript" src="js/jquery-ui.js"></script>
 
+  <!-- ROSLIBJS -->
+  <!-- EventEmitter2 is the sole dependency of roslibjs -->
+  <script src="roslibjs/include/EventEmitter2/eventemitter2.js"></script>
+  <!-- Roslibjs handles core ROS functionality in the browser -->
+  <script src="roslibjs/build/roslib.js"></script>
+
+  <script type="text/javascript" type="text/javascript">
+
+  var hostname = location.hostname;
+
+  var ros = new ROSLIB.Ros({
+    url : 'ws://'+hostname+':9090'
+  });
+
+  var twitterClient = new ROSLIB.ActionClient({
+    ros : ros,
+    serverName : '/strands_image_tweets',
+    actionName : 'strands_tweets/GrabImageThenTweetAction'
+  });
+
+  ros.on('connection', function() {
+    console.log('Connected to websocket server.');
+  });
+
+  ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: ', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Connection to websocket server closed.');
+  });
+
+
+  function tweetPicture() {
+
+    var goal = new ROSLIB.Goal({
+      actionClient : twitterClient,
+      goalMessage : {
+        text : 'Test tweet',
+        force : false,
+        topic : '/head_xtion/rgb/image_mono'
+      }
+    });
+
+    goal.on('feedback', function(feedback) {
+      console.log('Feedback: ' + feedback);
+    });
+
+    goal.on('result', function(result) {
+      console.log('Final Result: ' + result);
+      $('#tweetButton').removeClass('disabled');
+    });
+
+    goal.send();
+    $('#tweetButton').addClass('disabled');
+  }
+  </script>
+
 </head>
 
 <body>
@@ -28,9 +86,9 @@
     <br/>
     <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-4"><button type="button" class="btn btn-primary btn-block"><h2>Tweet Picture</h2></button></div>
+      <div class="col-sm-4"><button id="tweetButton" type="button" onclick="tweetPicture()" class="btn btn-primary btn-block"><h2>Tweet Picture</h2></button></div>
       <div class="col-sm-2"></div>
-      <div class="col-sm-4"><button type="button" class="btn btn-default btn-block"><h2>Cancel</h2></button></div>
+      <div class="col-sm-4"><button id="cancelButton"  type="button" class="btn btn-default btn-block"><h2>Cancel</h2></button></div>
       <div class="col-sm-1"></div>
     </div>
   </div>      
