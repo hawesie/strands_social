@@ -2,8 +2,8 @@
 Changelog for package social_card_reader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.11 (2015-03-04)
+-------------------
 * Merge pull request `#40 <https://github.com/strands-project/strands_social/issues/40>`_ from hawesie/hydro-devel
   Adding necessary linking for OS X
 * Adding necessary linking for OS X
