@@ -2,6 +2,16 @@
 Changelog for package social_card_reader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#40 <https://github.com/strands-project/strands_social/issues/40>`_ from hawesie/hydro-devel
+  Adding necessary linking for OS X
+* Adding necessary linking for OS X
+* Sensitivity increase
+* Minor changes to social card reader.
+* Card reader now publishes card position.
+* Contributors: Jaime Pulido Fentanes, Marc Hanheide, Nick Hawes, STRANDS, Tom Krajnik
+
 0.0.10 (2014-11-21)
 -------------------
 
