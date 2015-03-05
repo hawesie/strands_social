@@ -44,6 +44,31 @@ $def with (topic, headline, sayings)
     console.log('Connection to websocket server closed.');
   });
 
+  var displayPage = new ROSLIB.Service({
+    ros : ros,
+    name : '/strands_webserver/display_page',
+    serviceType : 'strands_webserver/SetDisplay'
+  });
+
+   function displayRelativePage(page) {
+
+    var request = new ROSLIB.ServiceRequest({});
+ 
+    // hardcode for now
+    toDisplay = 'http://localhost:8090/';
+
+    var request = new ROSLIB.ServiceRequest({
+      display_number : 0,
+      content : toDisplay + page
+    });
+
+    displayPage.callService(request, function(result) {
+      console.log('Result for service call on '
+        + displayPage.name
+        + ': '
+        + result.success);
+  });
+  }
 
   function tweetPicture() {
 
@@ -93,7 +118,7 @@ $def with (topic, headline, sayings)
       <div class="col-sm-1"></div>
       <div class="col-sm-4"><button id="tweetButton" type="button" onclick="tweetPicture()" class="btn btn-primary btn-block"><h2>Tweet Picture</h2></button></div>
       <div class="col-sm-2"></div>
-      <div class="col-sm-4"><button id="cancelButton"  type="button" class="btn btn-default btn-block"><h2>Cancel</h2></button></div>
+      <div class="col-sm-4"><button id="cancelButton" onclick="displayRelativePage('index.html')" type="button" class="btn btn-default btn-block"><h2>Cancel</h2></button></div>
       <div class="col-sm-1"></div>
     </div>
   </div>      
