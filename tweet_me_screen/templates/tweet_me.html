@@ -1,4 +1,4 @@
-$def with (topic, headline, sayings)
+$def with (topic, headline, sayings, other_button)
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +118,7 @@ $def with (topic, headline, sayings)
       <div class="col-sm-1"></div>
       <div class="col-sm-4"><button id="tweetButton" type="button" onclick="tweetPicture()" class="btn btn-primary btn-block"><h2>Tweet Picture</h2></button></div>
       <div class="col-sm-2"></div>
-      <div class="col-sm-4"><button id="cancelButton" onclick="displayRelativePage('index.html')" type="button" class="btn btn-default btn-block"><h2>Cancel</h2></button></div>
+      <div class="col-sm-4">$:other_button</div>
       <div class="col-sm-1"></div>
     </div>
   </div>      
