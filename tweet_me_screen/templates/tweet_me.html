@@ -32,6 +32,12 @@ $def with (topic, headline, sayings, other_button)
     actionName : 'strands_tweets/GrabImageThenTweetAction'
   });
 
+  var fakeCamera = new ROSLIB.ActionClient({
+    ros : ros,
+    serverName : '/camera_effects',
+    actionName : 'fake_camera_effects/CameraEffectsAction'
+  });
+
   ros.on('connection', function() {
     console.log('Connected to websocket server.');
   });
@@ -75,11 +81,18 @@ $def with (topic, headline, sayings, other_button)
     var goal = new ROSLIB.Goal({
       actionClient : twitterClient,
       goalMessage : {
-        text : 'Test tweet',
+        text : 'Look who I just met...',
         force : false,
         topic : '$:topic'
       }
     });
+
+  var camGoal = new ROSLIB.Goal({
+      actionClient : fakeCamera,
+      goalMessage : {}
+    });
+
+  
 
     goal.on('feedback', function(feedback) {
       console.log('Feedback: ' + feedback);
@@ -96,6 +109,7 @@ $def with (topic, headline, sayings, other_button)
     // switch to image snapshot and disable button
     $$('#imageStream').attr("src","http://localhost:8080/snapshot?topic=$:topic");
     $$('#tweetButton').addClass('disabled');
+  camGoal.send();
   }
   </script>
 
