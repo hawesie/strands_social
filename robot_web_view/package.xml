@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <name>robot_web_view</name>
+  <version>0.0.0</version>
+  <description>Scripts to create a configurable single web page view of information from the robot.</description>
+
+  <maintainer email="n.a.hawes@cs.bham.ac.uk">Nick Hawes</maintainer>
+  <author email="n.a.hawes@cs.bham.ac.uk">Nick Hawes</author>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>strands_webserver</build_depend>
+  <build_depend>strands_webtools</build_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>strands_webserver</run_depend>
+  <run_depend>strands_webtools</run_depend>
+  <run_depend>web_video_server</run_depend>
+
+  <export>
+  </export>
+</package>
