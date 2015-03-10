@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+
+  <!-- The default styling is provided by http://getbootstrap.com -->
+  <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery and display.js are conveniences for interacting with the DOM -->
+  <script src="js/jquery.js"></script>
+  <script src="js/display.js"></script>
+  <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+  <!-- ROSLIBJS -->
+  <!-- EventEmitter2 is the sole dependency of roslibjs -->
+  <script src="roslibjs/include/EventEmitter2/eventemitter2.js"></script>
+  <!-- Roslibjs handles core ROS functionality in the browser -->
+  <script src="roslibjs/build/roslib.js"></script>
+
+  <script type="text/javascript" type="text/javascript">
+
+  var hostname = location.hostname;
+
+  var ros = new ROSLIB.Ros({
+    url : 'ws://'+hostname+':9090'
+  });
+
+  // var twitterClient = new ROSLIB.ActionClient({
+  //   ros : ros,
+  //   serverName : '/strands_image_tweets',
+  //   actionName : 'strands_tweets/GrabImageThenTweetAction'
+  // });
+
+  // var fakeCamera = new ROSLIB.ActionClient({
+  //   ros : ros,
+  //   serverName : '/camera_effects',
+  //   actionName : 'fake_camera_effects/CameraEffectsAction'
+  // });
+
+  // ros.on('connection', function() {
+  //   console.log('Connected to websocket server.');
+  // });
+
+  // ros.on('error', function(error) {
+  //   console.log('Error connecting to websocket server: ', error);
+  // });
+
+  // ros.on('close', function() {
+  //   console.log('Connection to websocket server closed.');
+  // });
+
+  // var displayPage = new ROSLIB.Service({
+  //   ros : ros,
+  //   name : '/strands_webserver/display_page',
+  //   serviceType : 'strands_webserver/SetDisplay'
+  // });
+
+  //  function displayRelativePage(page) {
+
+  //   var request = new ROSLIB.ServiceRequest({});
+ 
+  //   // hardcode for now
+  //   toDisplay = 'http://localhost:8090/';
+
+  //   var request = new ROSLIB.ServiceRequest({
+  //     display_number : 0,
+  //     content : toDisplay + page
+  //   });
+
+  //   displayPage.callService(request, function(result) {
+  //     console.log('Result for service call on '
+  //       + displayPage.name
+  //       + ': '
+  //       + result.success);
+  // });
+  // }
+
+  // function tweetPicture() {
+
+  //   var goal = new ROSLIB.Goal({
+  //     actionClient : twitterClient,
+  //     goalMessage : {
+  //       text : 'Look who I just met...',
+  //       force : false,
+  //       topic : '/head_xtion/rgb/image_mono'
+  //     }
+  //   });
+
+  // var camGoal = new ROSLIB.Goal({
+  //     actionClient : fakeCamera,
+  //     goalMessage : {}
+  //   });
+
+  
+
+  //   goal.on('feedback', function(feedback) {
+  //     console.log('Feedback: ' + feedback);
+  //   });
+
+  //   goal.on('result', function(result) {
+  //     console.log('Final Result: ' + result);
+  //     // renable image stream and tweet button
+  //     $('#imageStream').attr("src","http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono");
+  //     $('#tweetButton').removeClass('disabled');      
+  //   });
+
+  //   goal.send();
+  //   // switch to image snapshot and disable button
+  //   $('#imageStream').attr("src","http://localhost:8080/snapshot?topic=/head_xtion/rgb/image_mono");
+  //   $('#tweetButton').addClass('disabled');
+  // camGoal.send();
+  // }
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+
+      <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=/head_xtion/rgb/image_mono"/></div> 
+      <div class="col-sm-1"></div>      
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>      
+</body>
+</html>
