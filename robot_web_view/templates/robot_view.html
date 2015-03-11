@@ -26,6 +26,56 @@ $def with (topic,  other_button)
     url : 'ws://'+hostname+':9090'
   });
 
+
+  var rosout = new ROSLIB.Topic({
+    ros : ros,
+    name : '/rosout_agg',
+    messageType : 'rosgraph_msgs/Log'
+  });
+
+  rosoutMessages = []
+
+  rosout.subscribe(function(message) {
+    console.log('rosout received');
+    rosoutMessages[rosoutMessages.length] = message
+
+      // trim if it gets a bit long
+      if(rosoutMessages.length > 10 + 10) {
+        rosoutMessages = rosoutMessages.slice(10);
+      }
+
+      renderMessages(rosoutMessages);
+
+    });
+
+
+  function classString(level) {
+
+    if(level == 16 || level == 8) {
+      return "danger";
+    }
+    else if(level == 4) {
+      return "warning";
+    }
+    else if(level == 1) {
+      return "active";
+    }
+    else {
+      return "";
+    }
+  }
+
+  function renderMessages (messages) {
+    table = "<table class=\"table\">";
+    for (var i = 0; i < messages.length; i++) {
+      table += "<tr class=\"" + classString(messages[i].level) + "\"><td>" + messages[i].name + "</td><td>" + messages[i].msg + "</td></tr>";
+    };
+    table += "</table>";
+
+    $$('#logRow').html(table);
+    $$('#logRow').scrollTop($$('#logRow')[0].scrollHeight);
+  }
+
   // var twitterClient = new ROSLIB.ActionClient({
   //   ros : ros,
   //   serverName : '/strands_image_tweets',
@@ -38,17 +88,17 @@ $def with (topic,  other_button)
   //   actionName : 'fake_camera_effects/CameraEffectsAction'
   // });
 
-  // ros.on('connection', function() {
-  //   console.log('Connected to websocket server.');
-  // });
+ros.on('connection', function() {
+  console.log('Connected to websocket server.');
+});
 
-  // ros.on('error', function(error) {
-  //   console.log('Error connecting to websocket server: ', error);
-  // });
+ros.on('error', function(error) {
+  console.log('Error connecting to websocket server: ', error);
+});
 
-  // ros.on('close', function() {
-  //   console.log('Connection to websocket server closed.');
-  // });
+ros.on('close', function() {
+  console.log('Connection to websocket server closed.');
+});
 
   // var displayPage = new ROSLIB.Service({
   //   ros : ros,
@@ -59,7 +109,7 @@ $def with (topic,  other_button)
   //  function displayRelativePage(page) {
 
   //   var request = new ROSLIB.ServiceRequest({});
- 
+
   //   // hardcode for now
   //   toDisplay = 'http://localhost:8090/';
 
@@ -92,7 +142,7 @@ $def with (topic,  other_button)
   //     goalMessage : {}
   //   });
 
-  
+
 
   //   goal.on('feedback', function(feedback) {
   //     console.log('Feedback: ' + feedback);
@@ -117,20 +167,36 @@ $def with (topic,  other_button)
 
 <body>
   <div class="container">
-
-      <div class="row">
+    <br/>
+    <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-10"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=$:topic"/></div> 
+      <div class="col-sm-7"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=$:topic"/></div> 
+      <div class="col-sm-3">
+        <dl class="dl-horizontal">
+          <dt>Battery</dt>
+          <dd>10</dd>
+          <dt>Current Task</dt>
+          <dd>10</dd>
+          <dt>Queued Tasks</dt>
+          <dd>10</dd>
+          <dt>Visible People</dt>
+          <dd>10</dd>
+          <dt>Visible People</dt>
+          <dd>10</dd>
+        </dl>
+      </div>
       <div class="col-sm-1"></div>      
     </div>
     <br/>
     <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-4"></div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-4">$:other_button</div>
+      <div class="col-sm-10"  style="height:150px;overflow:auto;" id="logRow">
+
+      </div>
       <div class="col-sm-1"></div>
     </div>
+
+
   </div>      
 </body>
 </html>

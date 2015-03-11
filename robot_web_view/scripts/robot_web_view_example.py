@@ -20,7 +20,7 @@ if __name__ == '__main__':
     strands_webserver.client_utils.set_http_root(http_root)
 
     # generate the page 
-    file_name = 'tweet_me.html'
+    file_name = 'robot_view.html'
     create_robot_view_page(os.path.join(http_root, file_name), image_topic)
 
     # show the page
