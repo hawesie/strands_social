@@ -24,69 +24,114 @@ $def with (topic,  other_button)
 
   var ros = new ROSLIB.Ros({
     url : 'ws://'+hostname+':9090'
-  });
+});
 
-
+  // rosout
   var rosout = new ROSLIB.Topic({
     ros : ros,
     name : '/rosout_agg',
-    messageType : 'rosgraph_msgs/Log'
-  });
+    messageType : 'rosgraph_msgs/Log',
+    throttle_rate: 5.0
+});
+
+
 
   rosoutMessages = []
 
   rosout.subscribe(function(message) {
-    console.log('rosout received');
     rosoutMessages[rosoutMessages.length] = message
 
       // trim if it gets a bit long
       if(rosoutMessages.length > 10 + 10) {
         rosoutMessages = rosoutMessages.slice(10);
-      }
+    }
 
-      renderMessages(rosoutMessages);
+    renderMessages(rosoutMessages);
 
-    });
+});
 
 
   function classString(level) {
 
     if(level == 16 || level == 8) {
       return "danger";
-    }
-    else if(level == 4) {
-      return "warning";
-    }
-    else if(level == 1) {
-      return "active";
-    }
-    else {
-      return "";
-    }
   }
+  else if(level == 4) {
+      return "warning";
+  }
+  else if(level == 1) {
+      return "active";
+  }
+  else {
+      return "";
+  }
+}
 
-  function renderMessages (messages) {
+function renderMessages (messages) {
     table = "<table class=\"table\">";
     for (var i = 0; i < messages.length; i++) {
       table += "<tr class=\"" + classString(messages[i].level) + "\"><td>" + messages[i].name + "</td><td>" + messages[i].msg + "</td></tr>";
-    };
-    table += "</table>";
+  };
+  table += "</table>";
 
-    $$('#logRow').html(table);
-    $$('#logRow').scrollTop($$('#logRow')[0].scrollHeight);
+  $$('#logRow').html(table);
+  $$('#logRow').scrollTop($$('#logRow')[0].scrollHeight);
+}
+
+  // battery level
+  var battery = new ROSLIB.Topic({
+    ros : ros,
+    name : '/battery_state',
+    messageType : 'scitos_msgs/BatteryState',
+    throttle_rate : 1,
+});
+
+  battery.subscribe(function(message) {
+    $$('#battery').html(message.lifePercent + "%");
+});
+
+
+// setup a listener for the schedule
+var schedule = new ROSLIB.Topic({
+  ros : ros,
+  name : '/current_schedule',
+  messageType : 'strands_executive_msgs/ExecutionStatus',
+  throttle_rate : 1,
+});
+
+
+
+schedule.subscribe(function(message) {
+  if(message.currently_executing || message.execution_queue.length > 0) {
+    if(message.currently_executing) {
+      $$('#exeStatus').html("Executing"); 
+      $$('#nextTask').html("Current Task"); 
   }
+  else {
+   $$('#exeStatus').html("Pending");  
+   $$('#nextTask').html("Next Task");         
+}
+$$('#nextTaskDesc').html(message.execution_queue[0].action);
+$$('#nextTaskLoc').html(message.execution_queue[0].start_node_id); 
+}
+else {
+ $$('#exeStatus').html("No tasks");  
+}
+});
 
-  // var twitterClient = new ROSLIB.ActionClient({
-  //   ros : ros,
-  //   serverName : '/strands_image_tweets',
-  //   actionName : 'strands_tweets/GrabImageThenTweetAction'
-  // });
+// setup a listener for the topological closestNode
+var closestNode = new ROSLIB.Topic({
+  ros : ros,
+  name : '/closest_node',
+  messageType : 'std_msgs/String',
+  throttle_rate : 1,
+});
 
-  // var fakeCamera = new ROSLIB.ActionClient({
-  //   ros : ros,
-  //   serverName : '/camera_effects',
-  //   actionName : 'fake_camera_effects/CameraEffectsAction'
-  // });
+closestNode.subscribe(function(message) {
+    $$('#currentLoc').html(message.data);
+});
+
+
 
 ros.on('connection', function() {
   console.log('Connected to websocket server.');
@@ -173,30 +218,41 @@ ros.on('close', function() {
       <div class="col-sm-7"><img id="imageStream" class="center-block img-thumbnail" src="http://localhost:8080/stream?topic=$:topic"/></div> 
       <div class="col-sm-3">
         <dl class="dl-horizontal">
-          <dt>Battery</dt>
-          <dd>10</dd>
-          <dt>Current Task</dt>
-          <dd>10</dd>
-          <dt>Queued Tasks</dt>
-          <dd>10</dd>
-          <dt>Visible People</dt>
-          <dd>10</dd>
-          <dt>Visible People</dt>
-          <dd>10</dd>
-        </dl>
-      </div>
-      <div class="col-sm-1"></div>      
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-10"  style="height:150px;overflow:auto;" id="logRow">
-
-      </div>
-      <div class="col-sm-1"></div>
-    </div>
 
 
-  </div>      
+          <dt>Location</dt>
+          <dd id="currentLoc"></dd>
+          
+          <dt>Battery:</dt>
+          <dd id="battery"></dd>
+          
+          <dt>Status:</dt>
+          <dd id="exeStatus"></dd>
+          
+          <dt id="nextTask"></dt>
+          <dd id="nextTaskDesc"></dd>
+
+          <dt>Target Location</dt>
+          <dd id="nextTaskLoc"></dd>
+
+<!--           <dt>Visible People:</dt>
+          <dd>10</dd>
+          <dt>Visible People:</dt>
+          <dd>10</dd>
+ -->      </dl>
+  </div>
+  <div class="col-sm-1"></div>      
+</div>
+<br/>
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10"  style="height:150px;overflow:auto;" id="logRow">
+
+  </div>
+  <div class="col-sm-1"></div>
+</div>
+
+
+</div>      
 </body>
 </html>
