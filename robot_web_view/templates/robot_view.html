@@ -42,7 +42,7 @@ $def with (topic,  other_button)
     rosoutMessages[rosoutMessages.length] = message
 
       // trim if it gets a bit long
-      if(rosoutMessages.length > 10 + 10) {
+      if(rosoutMessages.length > 50 + 10) {
         rosoutMessages = rosoutMessages.slice(10);
     }
 
@@ -117,6 +117,9 @@ $$('#nextTaskLoc').html(message.execution_queue[0].start_node_id);
 else {
  $$('#exeStatus').html("No tasks");  
 }
+ $$('#queueLen').html(message.execution_queue.length);  
+
+
 });
 
 // setup a listener for the topological closestNode
@@ -232,8 +235,13 @@ ros.on('close', function() {
           <dt id="nextTask"></dt>
           <dd id="nextTaskDesc"></dd>
 
-          <dt>Target Location</dt>
+
+          <dt>Target Location:</dt>
           <dd id="nextTaskLoc"></dd>
+
+
+          <dt>Queued Tasks:</dt>
+          <dd id="queueLen"></dd>
 
 <!--           <dt>Visible People:</dt>
           <dd>10</dd>
@@ -246,11 +254,18 @@ ros.on('close', function() {
 <br/>
 <div class="row">
   <div class="col-sm-1"></div>
-  <div class="col-sm-10"  style="height:150px;overflow:auto;" id="logRow">
+  <div class="col-sm-10"  style="height:200px;overflow:auto;" id="logRow">
 
   </div>
   <div class="col-sm-1"></div>
 </div>
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">$:other_button</div>
+      <div class="col-sm-1"></div>
+    </div>
 
 
 </div>      
