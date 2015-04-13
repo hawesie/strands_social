@@ -2,8 +2,8 @@
 Changelog for package strands_tweets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2015-04-13)
+-------------------
 * changing order of tweeting publishing trying to tackle slow network problems
 * Contributors: Jaime Pulido Fentanes
 

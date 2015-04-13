@@ -2,8 +2,8 @@
 Changelog for package image_branding
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2015-04-13)
+-------------------
 * copying header to output image
 * adding image superimposer
 * Contributors: Jailander

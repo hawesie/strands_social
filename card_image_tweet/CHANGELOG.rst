@@ -2,8 +2,8 @@
 Changelog for package card_image_tweet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2015-04-13)
+-------------------
 * changing order of tweeting publishing trying to tackle slow network problems
 * Contributors: Jaime Pulido Fentanes
 
