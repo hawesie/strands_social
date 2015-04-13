@@ -48,7 +48,7 @@ class SuperImposer(object):
         cv2.putText(photo,ros_time_str,(width/2, hval2), font, 0.7,(64,64,64),2)
         #width/2
         image_message = bridge.cv2_to_imgmsg(photo, encoding="bgr8")
-        
+        image_message.header = msg.header
         self.photo_pub.publish(image_message)
         
         #self._result.branded_image = image_message
