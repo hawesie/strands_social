@@ -2,6 +2,21 @@
 Changelog for package social_card_reader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-03-24)
+-------------------
+* Moving incredibly spammy output to debug level instead of printf.
+* Contributors: Christian Dondrup
+
+0.0.11 (2015-03-04)
+-------------------
+* Merge pull request `#40 <https://github.com/strands-project/strands_social/issues/40>`_ from hawesie/hydro-devel
+  Adding necessary linking for OS X
+* Adding necessary linking for OS X
+* Sensitivity increase
+* Minor changes to social card reader.
+* Card reader now publishes card position.
+* Contributors: Jaime Pulido Fentanes, Marc Hanheide, Nick Hawes, STRANDS, Tom Krajnik
+
 0.0.10 (2014-11-21)
 -------------------
 
