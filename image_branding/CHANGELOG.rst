@@ -2,6 +2,12 @@
 Changelog for package image_branding
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Adding current task to the image
+* Improving text superimposer adding no filming images and timeout images, also adding an script to load these images in the mongodb
+* Contributors: Jaime Pulido Fentanes
+
 0.0.13 (2015-04-13)
 -------------------
 * copying header to output image
