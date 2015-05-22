@@ -2,6 +2,9 @@
 Changelog for package fake_camera_effects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.14 (2015-05-13)
 -------------------
 
